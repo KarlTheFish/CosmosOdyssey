@@ -1,0 +1,46 @@
+﻿@page
+
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to CosmosOdyssey!</h1>
+    <h2 size="14px">Most trusted space flight booking site since 2023!</h2>
+    
+    <div>
+        <form method="get" asp-page="./FindRoute">
+            <div>
+                <label for="from">From:</label>
+                <select id="from" name="from">
+                    <option value="" selected hidden>Select something</option>
+                    <option value="Earth">Earth</option>
+                    <option value="Neptune">Neptune</option>
+                </select>
+                <label for="to">To:</label>
+                <select id="to" name="to">
+                    <option value="0" selected hidden>Select something</option>
+                    <option value="Jupiter">Jupiter</option>
+                    <option value="Uranus">Uranus</option>
+                </select>
+                <button type="submit">Go!</button>
+            </div>
+        </form>
+        <div>
+            @if (Model.TravelRouteModel != null)
+            {
+                <h3>Route Information</h3>
+                <p>From: @Model.TravelRoute.From</p>
+                <p>To: @Model.TravelRoute.To</p>
+                <p>Distance: @Model.TravelRoute.Distance</p>
+                <h4>Providers:</h4>
+                <ul>
+                    @foreach (var provider in Model.TravelRoute.Providers)
+                    {
+                        <li>@provider.Name</li>
+                    }
+                </ul>
+            }
+        </div>
+    </div>
+</div>
