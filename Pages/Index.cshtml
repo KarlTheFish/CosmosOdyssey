@@ -11,35 +11,34 @@
     
     <div>
         <form method="get">
-            <div>
-                <label for="from">From:</label>
-                <select id="from" name="from">
-                    <option value="" selected hidden>Select something</option>
-                    <option value="Earth">Earth</option>
-                    <option value="Neptune">Neptune</option>
-                </select>
-                <label for="to">To:</label>
-                <select id="to" name="to">
-                    <option value="0" selected hidden>Select something</option>
-                    <option value="Jupiter">Jupiter</option>
-                    <option value="Uranus">Uranus</option>
-                </select>
-                <button type="submit">Go!</button>
-            </div>
+            <label for="from">From:</label>
+            <select id="from" name="from">
+                <option value="" selected hidden>Select something</option>
+                <option value="Earth">Earth</option>
+                <option value="Neptune">Neptune</option>
+            </select>
+            <label for="to">To:</label>
+            <select id="to" name="to">
+                <option value="0" selected hidden>Select something</option>
+                <option value="Jupiter">Jupiter</option>
+                <option value="Uranus">Uranus</option>
+            </select>
+            <button type="submit" name="submitButton">Go!</button>
         </form>
-        <div>
-            @if (Models.TravelRouteModel.ID != -1){
-                <h3>Route Information</h3>
-                <p>From: @Models.TravelRouteModel.From</p>
-                <p>To: @Models.TravelRouteModel.To</p>
-                <p>Distance: @Models.TravelRouteModel.Distance</p>
-                <h4>Providers:</h4>
-                <ul>
-                    @foreach (var provider in Models.TravelRouteModel.Providers){
-                        <li>@provider.CompanyName</li>
-                    }
-                </ul>
-            }
-        </div>
+    </div>
+    <div>
+        @if (IndexModel.TravelRoute != null){
+            <h3>Route Information</h3>
+            <p>From: @Models.TravelRouteModel.From</p>
+            <p>To: @Models.TravelRouteModel.To</p>
+            <p>Distance: @Models.TravelRouteModel.Distance</p>
+            <h4>Providers:</h4>
+            <ul>
+                @*@foreach (var provider in Models.TravelRouteModel.Providers){
+                    <li>@provider.CompanyName</li>
+                }*@
+                lol
+            </ul>
+        }
     </div>
 </div>
