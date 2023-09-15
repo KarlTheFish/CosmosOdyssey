@@ -27,11 +27,11 @@
         </form>
     </div>
     <div>
-        @if (IndexModel.TravelRoute != null){
+        @if (Model.TravelRoute != null){
             <h3>Route Information</h3>
-            <p>From: @Models.TravelRouteModel.From</p>
-            <p>To: @Models.TravelRouteModel.To</p>
-            <p>Distance: @Models.TravelRouteModel.Distance</p>
+            <p>From: @Model.TravelRoute.From</p>
+            <p>To: @Model.TravelRoute.To</p>
+            <p>Distance: @Model.TravelRoute.Distance</p>
             <h4>Providers:</h4>
             <ul>
                 @*@foreach (var provider in Models.TravelRouteModel.Providers){
