@@ -12,18 +12,18 @@
     <div>
         <form method="get">
             <label for="from">From:</label>
-            <select id="from" name="from">
-                <option value="" selected hidden>Select something</option>
+            <select id="from" name="from" asp-for="fromSelection">
+                <option value="" hidden>Select something</option>
                 <option value="Earth">Earth</option>
                 <option value="Neptune">Neptune</option>
             </select>
             <label for="to">To:</label>
-            <select id="to" name="to">
-                <option value="0" selected hidden>Select something</option>
+            <select id="to" name="to" asp-for="toSelection">
+                <option value="" hidden>Select something</option>
                 <option value="Jupiter">Jupiter</option>
                 <option value="Uranus">Uranus</option>
             </select>
-            <button type="submit" name="submitButton">Go!</button>
+            <button type="submit">Go!</button>
         </form>
     </div>
     <div>

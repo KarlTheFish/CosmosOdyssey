@@ -11,11 +11,25 @@ namespace CosmosOdyssey.Pages
     {
         private HttpClient _httpClient;
 
-        [BindProperty] public static TravelRouteModel? TravelRoute { get; set; } = null;
+        [BindProperty]
+        public static TravelRouteModel? TravelRoute { get; set; }
+        
+        [BindProperty(SupportsGet = true)]
+        public string fromSelection { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string toSelection { get; set; }
         
         public async Task<IActionResult> OnGet() { //Initial OnGet load
-            Console.WriteLine("OnGet called!");
+            fromSelection = Request.Query["from"];
+            toSelection = Request.Query["to"];
+            if (fromSelection != toSelection) {
+                TravelSubmitted(fromSelection, toSelection);
+            }
             return Page();
+        }
+
+        public IActionResult TravelSubmitted(string from, string to) {
+            return RedirectToPage("index", new { from = from, to = to });
         }
         
         public async Task<IActionResult> TravelSubmitHandler() {
