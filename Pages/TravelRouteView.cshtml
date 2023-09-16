@@ -1,0 +1,49 @@
+@page
+@model CosmosOdyssey.Pages.TravelRouteView
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Route Information</title>
+</head>
+<body>
+    <h1>Route Information</h1>
+
+    <div>
+        <label>From:</label>
+        <span>@Model.chosenRoute?.From</span>
+    </div>
+
+    <div>
+        <label>To:</label>
+        <span>@Model.chosenRoute?.To</span>
+    </div>
+
+    <div>
+        <label>Distance:</label>
+        <span>@Model.chosenRoute?.Distance</span>
+    </div>
+
+    <div>
+        <label>Providers:</label>
+        <ul>
+            @if (Model.chosenRoute?.Providers != null)
+            {
+                @foreach (var provider in Model.chosenRoute?.Providers)
+                {
+                    <li>@provider</li>
+                }
+            }
+            else
+            {
+                <li>No providers available</li>
+            }
+        </ul>
+    </div>
+</body>
+</html>

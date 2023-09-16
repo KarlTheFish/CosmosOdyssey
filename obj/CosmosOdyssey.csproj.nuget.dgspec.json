@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/karl-aleksander/RiderProjects/CosmosOdyssey/CosmosOdyssey/CosmosOdyssey.csproj": {}
+    "/home/karl-aleksander/RiderProjects/CosmosOdyssey/CosmosOdyssey.csproj": {}
   },
   "projects": {
-    "/home/karl-aleksander/RiderProjects/CosmosOdyssey/CosmosOdyssey/CosmosOdyssey.csproj": {
+    "/home/karl-aleksander/RiderProjects/CosmosOdyssey/CosmosOdyssey.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/karl-aleksander/RiderProjects/CosmosOdyssey/CosmosOdyssey/CosmosOdyssey.csproj",
+        "projectUniqueName": "/home/karl-aleksander/RiderProjects/CosmosOdyssey/CosmosOdyssey.csproj",
         "projectName": "CosmosOdyssey",
-        "projectPath": "/home/karl-aleksander/RiderProjects/CosmosOdyssey/CosmosOdyssey/CosmosOdyssey.csproj",
+        "projectPath": "/home/karl-aleksander/RiderProjects/CosmosOdyssey/CosmosOdyssey.csproj",
         "packagesPath": "/home/karl-aleksander/.nuget/packages/",
-        "outputPath": "/home/karl-aleksander/RiderProjects/CosmosOdyssey/CosmosOdyssey/obj/",
+        "outputPath": "/home/karl-aleksander/RiderProjects/CosmosOdyssey/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/karl-aleksander/.nuget/NuGet/NuGet.Config"
@@ -57,6 +57,10 @@
             "Microsoft.EntityFrameworkCore.Tools": {
               "target": "Package",
               "version": "[7.0.10, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
             }
           },
           "imports": [

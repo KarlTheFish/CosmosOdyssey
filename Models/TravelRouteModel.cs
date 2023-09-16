@@ -1,7 +1,7 @@
 namespace CosmosOdyssey.Models;
 
+//Made for my own convenience and slightly improved human readability
 public class TravelRouteModel {
-    public string ID { get; set; }
     public string From { get; set; }
     public string To { get; set; }
     public int Distance { get; set; }

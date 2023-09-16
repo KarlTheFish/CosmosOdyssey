@@ -9,49 +9,45 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = CosmosOdyssey
 build_property.RootNamespace = CosmosOdyssey
-build_property.ProjectDir = /home/karl-aleksander/RiderProjects/CosmosOdyssey/CosmosOdyssey/
+build_property.ProjectDir = /home/karl-aleksander/RiderProjects/CosmosOdyssey/
 build_property.RazorLangVersion = 7.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = /home/karl-aleksander/RiderProjects/CosmosOdyssey/CosmosOdyssey
+build_property.MSBuildProjectDirectory = /home/karl-aleksander/RiderProjects/CosmosOdyssey
 build_property._RazorSourceGeneratorDebug = 
 
-[/home/karl-aleksander/RiderProjects/CosmosOdyssey/CosmosOdyssey/Areas/Identity/Pages/_ViewStart.cshtml]
+[/home/karl-aleksander/RiderProjects/CosmosOdyssey/Areas/Identity/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXMvSWRlbnRpdHkvUGFnZXMvX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/karl-aleksander/RiderProjects/CosmosOdyssey/CosmosOdyssey/Pages/Error.cshtml]
+[/home/karl-aleksander/RiderProjects/CosmosOdyssey/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/karl-aleksander/RiderProjects/CosmosOdyssey/CosmosOdyssey/Pages/Index.cshtml]
+[/home/karl-aleksander/RiderProjects/CosmosOdyssey/Pages/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/karl-aleksander/RiderProjects/CosmosOdyssey/CosmosOdyssey/Pages/Privacy.cshtml]
+[/home/karl-aleksander/RiderProjects/CosmosOdyssey/Pages/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvUHJpdmFjeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/karl-aleksander/RiderProjects/CosmosOdyssey/CosmosOdyssey/Pages/Shared/_LoginPartial.cshtml]
+[/home/karl-aleksander/RiderProjects/CosmosOdyssey/Pages/Shared/_LoginPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU2hhcmVkL19Mb2dpblBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/karl-aleksander/RiderProjects/CosmosOdyssey/CosmosOdyssey/Pages/Shared/_ValidationScriptsPartial.cshtml]
+[/home/karl-aleksander/RiderProjects/CosmosOdyssey/Pages/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/karl-aleksander/RiderProjects/CosmosOdyssey/CosmosOdyssey/Pages/TestPage.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXMvVGVzdFBhZ2UuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[/home/karl-aleksander/RiderProjects/CosmosOdyssey/CosmosOdyssey/Pages/_ViewImports.cshtml]
+[/home/karl-aleksander/RiderProjects/CosmosOdyssey/Pages/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/karl-aleksander/RiderProjects/CosmosOdyssey/CosmosOdyssey/Pages/_ViewStart.cshtml]
+[/home/karl-aleksander/RiderProjects/CosmosOdyssey/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/karl-aleksander/RiderProjects/CosmosOdyssey/CosmosOdyssey/Pages/Shared/_Layout.cshtml]
+[/home/karl-aleksander/RiderProjects/CosmosOdyssey/Pages/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU2hhcmVkL19MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-z4utwqag2v
