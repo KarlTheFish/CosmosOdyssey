@@ -34,10 +34,9 @@
             <p>Distance: @Model.chosenRoute.Distance</p>
             <h4>Providers:</h4>
             <ul>
-                @*@foreach (var provider in Models.TravelRouteModel.Providers){
-                    <li>@provider.CompanyName</li>
-                }*@
-                lol
+                @foreach (var provider in Model.chosenRoute.Providers){
+                    <li>@provider.company.name</li>
+                }
             </ul>
         }
     </div>

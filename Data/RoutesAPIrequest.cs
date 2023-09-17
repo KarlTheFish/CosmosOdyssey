@@ -28,13 +28,11 @@ public class RoutesAPIrequest {
         httpClient = new HttpClient();
         HttpResponseMessage response = await httpClient.GetAsync(apiURL);
         if (response.IsSuccessStatusCode) {
-            Console.WriteLine("API call success");
             //Deserialize Json response into priceList model
             string apiResponseJson = await response.Content.ReadAsStringAsync();
             pricelist = new Pricelist();
             pricelist = JsonConvert.DeserializeObject<Pricelist>(apiResponseJson);
             //TODO: Check for validUntil, store last 15 lists
-            Console.WriteLine((pricelist != null) + " from " + (from) + " to " +(to) );
             BindRouteDataToModel(pricelist, from, to);
         }
         else

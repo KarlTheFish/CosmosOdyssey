@@ -40,9 +40,9 @@ namespace CosmosOdyssey.Pages
         public async Task<IActionResult> OnPost() {
             RoutesAPIrequest APIrequest = new RoutesAPIrequest(travelRouteDataService, this);
             if (fromSelection != "" && toSelection != "") {
-                Console.WriteLine("from " + (fromSelection) + " to " +(toSelection) );
                 await APIrequest.MakeRequest(fromSelection, toSelection);
                 requestMade = true;
+                chosenRoute = travelRouteDataService.chosenRoute;
             }
             return Page();
         }
