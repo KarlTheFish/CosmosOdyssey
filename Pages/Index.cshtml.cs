@@ -2,8 +2,11 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Net.Http;
 using System.Threading.Tasks;
+using CosmosOdyssey.Data;
 using CosmosOdyssey.Models;
+using CosmosOdyssey.Services;
 using Newtonsoft.Json;
+using HttpClient = System.Net.Http.HttpClient;
 
 namespace CosmosOdyssey.Pages
 {
@@ -16,60 +19,36 @@ namespace CosmosOdyssey.Pages
         public string fromSelection { get; set; }
         [BindProperty(SupportsGet = true)]
         public string toSelection { get; set; }
+
+        private bool requestMade = false;
+
+        private TravelRouteDataService travelRouteDataService;
+        private readonly RoutesAPIrequest APIrequest;
+
+        public IndexModel(TravelRouteDataService routeDataService) {
+            travelRouteDataService = routeDataService;
+        }
         
-        public async Task<IActionResult> OnGet() { //Initial OnGet load
-            fromSelection = Request.Query["from"];
-            toSelection = Request.Query["to"];
-            
-            if (fromSelection != toSelection) {
-                await TravelSubmitted(fromSelection, toSelection);
+        public IActionResult OnGet() { //Initial OnGet load
+            //Get data if the request has already been made
+            if (requestMade == true) {
+                chosenRoute = travelRouteDataService.chosenRoute;
             }
-            
             return Page();
         }
 
-        public async Task<IActionResult> TravelSubmitted(string from, string to) {
-            await TravelSubmitHandler(from, to);
-            return RedirectToPage("index", new { from = from, to = to });
+        public async Task<IActionResult> OnPost() {
+            RoutesAPIrequest APIrequest = new RoutesAPIrequest(travelRouteDataService, this);
+            if (fromSelection != "" && toSelection != "") {
+                Console.WriteLine("from " + (fromSelection) + " to " +(toSelection) );
+                await APIrequest.MakeRequest(fromSelection, toSelection);
+                requestMade = true;
+            }
+            return Page();
         }
-        
-        public async Task<IActionResult> TravelSubmitHandler(string from, string to) {
-            // Initialize with default values
-            _httpClient = new HttpClient();
-            
-            // Make an API request to get route information based on the selected planets
-            string apiUrl = $"https://cosmos-odyssey.azurewebsites.net/api/v1.0/TravelPrices/";
-            HttpResponseMessage response = await _httpClient.GetAsync(apiUrl);
 
-            if (response.IsSuccessStatusCode)
-            {
-                Console.WriteLine("API call success");
-                string apiResponseJson = await response.Content.ReadAsStringAsync();
-                
-                //Deserialize the JSON response into local travelroutelist model
-                Pricelist priceList = JsonConvert.DeserializeObject<Pricelist>(apiResponseJson);
-                
-                //Find the matching route
-                foreach (leg leg in priceList.legs)
-                {
-                    routeInfo routeInfo = leg.routeInfo;
-                    if (routeInfo.from.name == fromSelection && routeInfo.to.name == toSelection) {
-                        chosenRoute.From = fromSelection;
-                        chosenRoute.To = toSelection;
-                        chosenRoute.Distance = routeInfo.distance;
-                        chosenRoute.Providers = leg.providers;
-                        break;
-                    }
-                }
-                
-                return Page();
-            }
-            else
-            {
-                // Handle API request failure
-                Console.WriteLine("API error?");
-                return Page(); // You can customize this to display an error message
-            }
+        public IActionResult RedirectToIndex() {
+            return RedirectToPage("/index");
         }
     }
 }

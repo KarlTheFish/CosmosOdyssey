@@ -78,7 +78,6 @@
 /home/karl-aleksander/RiderProjects/CosmosOdyssey/CosmosOdyssey/obj/Debug/net7.0/CosmosOdyssey.genruntimeconfig.cache
 /home/karl-aleksander/RiderProjects/CosmosOdyssey/CosmosOdyssey/obj/Debug/net7.0/ref/CosmosOdyssey.dll
 /home/karl-aleksander/RiderProjects/CosmosOdyssey/CosmosOdyssey/bin/Debug/net7.0/Newtonsoft.Json.dll
-/home/karl-aleksander/RiderProjects/CosmosOdyssey/CosmosOdyssey/bin/Debug/net7.0/Newtonsoft.Json.xml
 /home/karl-aleksander/RiderProjects/CosmosOdyssey/bin/Debug/net7.0/appsettings.Development.json
 /home/karl-aleksander/RiderProjects/CosmosOdyssey/bin/Debug/net7.0/appsettings.json
 /home/karl-aleksander/RiderProjects/CosmosOdyssey/bin/Debug/net7.0/app.db

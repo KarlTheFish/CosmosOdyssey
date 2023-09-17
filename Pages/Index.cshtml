@@ -10,15 +10,15 @@
     <h2 size="14px">Most trusted space flight booking site since 2023!</h2>
     
     <div>
-        <form method="get">
+        <form method="post">
             <label for="from">From:</label>
-            <select id="from" name="from" asp-for="fromSelection">
+            <select id="from" name="fromSelection" asp-for="fromSelection">
                 <option value="" hidden>Select something</option>
                 <option value="Earth">Earth</option>
                 <option value="Neptune">Neptune</option>
             </select>
             <label for="to">To:</label>
-            <select id="to" name="to" asp-for="toSelection">
+            <select id="to" name="toSelection" asp-for="toSelection">
                 <option value="" hidden>Select something</option>
                 <option value="Jupiter">Jupiter</option>
                 <option value="Uranus">Uranus</option>

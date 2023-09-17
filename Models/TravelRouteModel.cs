@@ -4,6 +4,6 @@ namespace CosmosOdyssey.Models;
 public class TravelRouteModel {
     public string From { get; set; }
     public string To { get; set; }
-    public int Distance { get; set; }
+    public Int64 Distance { get; set; }
     public List<Provider> Providers { get; set; }
 }

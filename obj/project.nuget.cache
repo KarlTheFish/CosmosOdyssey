@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Ya9idWu59ql+vuzCzATc/QEO6mcBrEKFUu1TPEmuPFN3tXUXj6PT9hZjsd0h0xfexZ1fE6JC+Ko/proxqwfN9Q==",
+  "dgSpecHash": "xvIN8HJwAaSpzqEjslpjT4F2ZxGtCLdWmYkdH6v+uiqw859ps7qM8A2fT0t1qQRPxyiTxC6P4oWUbBLP9dLcxA==",
   "success": true,
-  "projectFilePath": "/home/karl-aleksander/RiderProjects/CosmosOdyssey/CosmosOdyssey.csproj",
+  "projectFilePath": "/home/karl-aleksander/RiderProjects/CosmosOdyssey/CosmosOdyssey/CosmosOdyssey.csproj",
   "expectedPackageFiles": [
     "/home/karl-aleksander/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/home/karl-aleksander/.nuget/packages/microsoft.aspnetcore.cryptography.internal/7.0.10/microsoft.aspnetcore.cryptography.internal.7.0.10.nupkg.sha512",
