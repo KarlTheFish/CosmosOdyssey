@@ -1,38 +1,36 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Net.Http;
-using System.Threading.Tasks;
 using CosmosOdyssey.Data;
 using CosmosOdyssey.Models;
 using CosmosOdyssey.Services;
-using Newtonsoft.Json;
 using HttpClient = System.Net.Http.HttpClient;
 
 namespace CosmosOdyssey.Pages
 {
     public class IndexModel : PageModel
     {
-        private HttpClient _httpClient;
         public TravelRouteModel? chosenRoute = null;
+        public List<List<TravelRouteModel>>? longRouteOptions = null;
         
         [BindProperty(SupportsGet = true)]
         public string fromSelection { get; set; }
         [BindProperty(SupportsGet = true)]
         public string toSelection { get; set; }
 
-        private bool requestMade = false;
+        private bool requestMade;
 
         private TravelRouteDataService travelRouteDataService;
-        private readonly RoutesAPIrequest APIrequest;
+        public String[] Planets = {"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"};
 
         public IndexModel(TravelRouteDataService routeDataService) {
             travelRouteDataService = routeDataService;
         }
         
-        public IActionResult OnGet() { //Initial OnGet load
+        public IActionResult OnGet() { //OnGet load; initiated every time the page is loaded
             //Get data if the request has already been made
             if (requestMade == true) {
                 chosenRoute = travelRouteDataService.chosenRoute;
+                longRouteOptions = travelRouteDataService.longRouteOptions;
             }
             return Page();
         }
@@ -43,6 +41,7 @@ namespace CosmosOdyssey.Pages
                 await APIrequest.MakeRequest(fromSelection, toSelection);
                 requestMade = true;
                 chosenRoute = travelRouteDataService.chosenRoute;
+                longRouteOptions = travelRouteDataService.longRouteOptions;
             }
             return Page();
         }

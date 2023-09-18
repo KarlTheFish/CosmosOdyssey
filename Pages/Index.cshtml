@@ -18,14 +18,16 @@
             <label for="from">From:</label>
             <select id="from" name="fromSelection" asp-for="fromSelection">
                 <option value="" hidden>Select something</option>
-                <option value="Earth">Earth</option>
-                <option value="Neptune">Neptune</option>
+                @foreach (var t in Model.Planets){
+                    <option value="@t">@t</option>
+                }
             </select>
             <label for="to">To:</label>
             <select id="to" name="toSelection" asp-for="toSelection">
                 <option value="" hidden>Select something</option>
-                <option value="Jupiter">Jupiter</option>
-                <option value="Uranus">Uranus</option>
+                @foreach (var t in Model.Planets){
+                    <option value="@t">@t</option>
+                }
             </select>
             <button type="submit">Go!</button>
         </form>
@@ -33,25 +35,37 @@
     <div>
         @if (Model.chosenRoute != null){
             <h3>Avalaible routes from @Model.chosenRoute.From to @Model.chosenRoute.To</h3>
-            <p>Distance: @Model.chosenRoute.Distance lightyears</p>
-            <table align="center">
-                <tr>
-                    <td>Provider name</td>
-                    <td>Price</td>
-                    <td>Departure</td>
-                    <td>Arrival</td>
-                    <td></td>
-                </tr>
-                @foreach (Provider provider in Model.chosenRoute.Providers){
+            @if (Model.longRouteOptions == null){
+                <p>Distance: @Model.chosenRoute.Distance lightyears</p>
+                <table align="center">
                     <tr>
-                        <td>@provider.company.name</td>
-                        <td>@provider.price</td>
-                        <td>@provider.flightStart</td>
-                        <td>@provider.flightEnd</td>
-                        <td><button>Book flight</button></td>
+                        <td>Provider name</td>
+                        <td>Price</td>
+                        <td>Departure</td>
+                        <td>Arrival</td>
+                        <td></td>
                     </tr>
+                    @foreach (Provider provider in Model.chosenRoute.Providers){
+                        <tr>
+                            <td>@provider.company.name</td>
+                            <td>@provider.price</td>
+                            <td>@provider.flightStart</td>
+                            <td>@provider.flightEnd</td>
+                            <td><button>Book flight</button></td>
+                        </tr>
+                    }
+                </table>
+            }
+            else{
+                <p>No direct flights available. Found @Model.longRouteOptions.Count available routes</p>
+                @foreach (var option in Model.longRouteOptions){
+                    <ol>
+                        @foreach (TravelRouteModel route in option){
+                            <li>@route.From - @route.To | @route.Distance</li>
+                        }
+                    </ol>
                 }
-            </table>
+            }
         }
     </div>
 </div>
