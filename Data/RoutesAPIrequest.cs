@@ -15,6 +15,7 @@ public class RoutesAPIrequest {
     private TravelRouteDataService travelRouteDataService;
     private string apiURL = "https://cosmos-odyssey.azurewebsites.net/api/v1.0/TravelPrices/";
     public TravelRouteModel ChosenRoute = new TravelRouteModel();
+    List<List<TravelRouteModel>> AllFullRoutes = new List<List<TravelRouteModel>>();
     private string fromString;
     private string toString;
     private readonly IndexModel indexModel;
@@ -37,7 +38,7 @@ public class RoutesAPIrequest {
             DirectRouteModel(pricelist, from, to);
             //If DirectRouteModel returns a model with empty values, there is no direct route avalaible.
             if (ChosenRoute.Distance < 10) {
-                travelRouteDataService.longRouteOptions = CalculateRoute.FindAvalaibleRoute(pricelist, from, to);
+                travelRouteDataService.longRouteOptions = CalculateRoute.FindAvalaibleRoute(pricelist, from, to, AllFullRoutes);
             }
         }
         else
