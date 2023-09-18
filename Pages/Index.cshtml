@@ -1,12 +1,16 @@
 ﻿@page
+@using CosmosOdyssey.Models
 @model IndexModel
-
-@{
-    ViewData["Title"] = "Home page";
-}
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>@ViewData["Title"]</title>
+    <!-- Add your CSS and scripts here -->
+</head>
+<body>
 <div class="text-center">
     <h1 class="display-4">Welcome to CosmosOdyssey!</h1>
+    
     <h2 size="14px">Most trusted space flight booking site since 2023!</h2>
     
     <div>
@@ -28,16 +32,28 @@
     </div>
     <div>
         @if (Model.chosenRoute != null){
-            <h3>Route Information</h3>
-            <p>From: @Model.chosenRoute.From</p>
-            <p>To: @Model.chosenRoute.To</p>
-            <p>Distance: @Model.chosenRoute.Distance</p>
-            <h4>Providers:</h4>
-            <ul>
-                @foreach (var provider in Model.chosenRoute.Providers){
-                    <li>@provider.company.name</li>
+            <h3>Avalaible routes from @Model.chosenRoute.From to @Model.chosenRoute.To</h3>
+            <p>Distance: @Model.chosenRoute.Distance lightyears</p>
+            <table align="center">
+                <tr>
+                    <td>Provider name</td>
+                    <td>Price</td>
+                    <td>Departure</td>
+                    <td>Arrival</td>
+                    <td></td>
+                </tr>
+                @foreach (Provider provider in Model.chosenRoute.Providers){
+                    <tr>
+                        <td>@provider.company.name</td>
+                        <td>@provider.price</td>
+                        <td>@provider.flightStart</td>
+                        <td>@provider.flightEnd</td>
+                        <td><button>Book flight</button></td>
+                    </tr>
                 }
-            </ul>
+            </table>
         }
     </div>
 </div>
+</body>
+</html>

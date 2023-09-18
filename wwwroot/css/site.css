@@ -24,3 +24,27 @@ body {
   background-color: #080556;
   color: #ffe0c0;
 }
+
+table {
+  color: #000000;
+  & tr:nth-child(even) {
+    background-color: #e7e7e7;
+    & button {
+      background-color: #e7e7e7;
+    }
+  }
+  & tr:nth-child(odd) {
+    background-color: #f4f4f4;
+    & button {
+      background-color: #f4f4f4;
+    }
+  }
+  & td {
+    border: 1px solid black;
+    padding: 5px;
+    text-align: left;
+  }
+  & firstColumn {
+    text-align: left;
+  }
+}
