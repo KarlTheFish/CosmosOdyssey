@@ -34,12 +34,10 @@ public class RoutesAPIrequest {
             pricelist = new Pricelist();
             pricelist = JsonConvert.DeserializeObject<Pricelist>(apiResponseJson);
             //TODO: Check for validUntil, store last 15 lists
-            //Get a direct route with current chosen values
-            DirectRouteModel(pricelist, from, to);
-            //If DirectRouteModel returns a model with empty values, there is no direct route avalaible.
-            if (ChosenRoute.Distance < 10) {
-                travelRouteDataService.longRouteOptions = CalculateRoute.FindAvalaibleRoute(pricelist, from, to, AllFullRoutes);
-            }
+            
+            //Find a route with the current chosen values from the current pricelist
+            travelRouteDataService.routeOptions = CalculateRoute.FindAvailableRoute(pricelist, from, to);
+            
         }
         else
         {
@@ -47,22 +45,5 @@ public class RoutesAPIrequest {
             //TODO: Add some kind of visual error message
         }
         return indexModel.RedirectToIndex();
-    }
-
-    //Binds one of the routes from API request data to a model
-    public TravelRouteModel DirectRouteModel(Pricelist PriceList, string from, string to) {
-        ChosenRoute = new TravelRouteModel();
-        foreach (Leg leg in pricelist.legs) {
-            ChosenRoute.From = from;
-            ChosenRoute.To = to;
-            if (leg.routeInfo.from.name == from && leg.routeInfo.to.name == to) {
-                ChosenRoute.Distance = leg.routeInfo.distance;
-                ChosenRoute.Providers = leg.providers;
-                break;
-            }
-        }
-        //Once the binding is done, give the value to the TravelRouteDataService service
-        travelRouteDataService.chosenRoute = ChosenRoute;
-        return ChosenRoute;
     }
 }

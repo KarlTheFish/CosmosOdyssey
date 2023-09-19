@@ -4,6 +4,5 @@ namespace CosmosOdyssey.Services;
 
 public class TravelRouteDataService
 {
-    public TravelRouteModel chosenRoute;
-    public List<List<TravelRouteModel>>? longRouteOptions;
+    public List<List<TravelRouteModel>> routeOptions;
 }

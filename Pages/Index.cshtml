@@ -1,5 +1,6 @@
 ﻿@page
 @using CosmosOdyssey.Models
+@using Microsoft.EntityFrameworkCore
 @model IndexModel
 <!DOCTYPE html>
 <html lang="en">
@@ -33,41 +34,47 @@
         </form>
     </div>
     <div>
-        @if (Model.chosenRoute != null){
-            <h3>Avalaible routes from @Model.chosenRoute.From to @Model.chosenRoute.To</h3>
-            @if (Model.longRouteOptions == null){
-                <p>Distance: @Model.chosenRoute.Distance lightyears</p>
-                <table align="center">
-                    <tr>
-                        <td>Provider name</td>
-                        <td>Price</td>
-                        <td>Departure</td>
-                        <td>Arrival</td>
-                        <td></td>
-                    </tr>
-                    @foreach (Provider provider in Model.chosenRoute.Providers){
-                        <tr>
-                            <td>@provider.company.name</td>
-                            <td>@provider.price</td>
-                            <td>@provider.flightStart</td>
-                            <td>@provider.flightEnd</td>
-                            <td><button>Book flight</button></td>
-                        </tr>
-                    }
-                </table>
+        @if (Model.RouteOptions != null){ //TODO: Make the tables actually look nice
+            <h3>Found @Model.RouteOptions.Count available route(s) from @Model.RouteOptions[0][0].From to @Model.RouteOptions[^1][^1].To</h3>
+            <p>Click on the routes to see more information</p>
+            foreach (var FullRoute in Model.RouteOptions){ //For creating the buttons. In separate foreach for better user experience
+                <button onclick="ShowTable('@Model.FullRouteToText(FullRoute)')">@Model.FullRouteToText(FullRoute)</button>
             }
-            else{
-                <p>No direct flights available. Found @Model.longRouteOptions.Count available routes</p>
-                @foreach (var option in Model.longRouteOptions){
-                    <ol>
-                        @foreach (TravelRouteModel route in option){
-                            <li>@route.From - @route.To | @route.Distance</li>
-                        }
-                    </ol>
-                }
+            foreach (var FullRoute in Model.RouteOptions){//Goes through all the route options
+                <Table id="@Model.FullRouteToText(FullRoute)" style="display: none;">
+                        @foreach (var Route in FullRoute){
+                                //Goes through every leg in a full route
+                                <tr>
+                                    <td>From @Route.From</td>
+                                    <td>to @Route.To</td>
+                                    <td>Distance @Route.Distance</td>
+                                </tr>
+                                <tr><td>Providers:</td></tr>
+                                @foreach (var provider in Route.Providers){
+                                    <tr>
+                                        <td>@provider.company.name</td>
+                                        <td>@provider.price</td>
+                                        <td>@provider.flightStart</td>
+                                        <td>@provider.flightEnd</td>
+                                    </tr>
+                                }
+                            }
+                </Table>
             }
         }
     </div>
 </div>
 </body>
+<script>
+    function ShowTable(tableId) {
+        var tables = document.querySelectorAll('table');
+        tables.forEach(function (table) {
+            if (table.id === tableId) {
+                table.style.display = 'table';
+            } else {
+                table.style.display = 'none';
+            }
+        });
+    }
+</script>
 </html>

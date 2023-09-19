@@ -3,22 +3,14 @@ using CosmosOdyssey.Models;
 namespace CosmosOdyssey.Data;
 
 public class CalculateRoute {
-    public static List<List<TravelRouteModel>> FindAvalaibleRoute(Pricelist pricelist, string from, string to, List<List<TravelRouteModel>> outputList) {
-        
-        outputList = FindAvailableRoutes(pricelist, from, to);
-        
-        return outputList;
-    }
-    
-    //Available routes finder function
-    public static List<List<TravelRouteModel>> FindAvailableRoutes(Pricelist pricelist, string from, string to)
-    {
+    public static List<List<TravelRouteModel>> FindAvailableRoute(Pricelist pricelist, string from, string to) {
         List<List<TravelRouteModel>> allRoutes = new List<List<TravelRouteModel>>();
         List<TravelRouteModel> currentRoute = new List<TravelRouteModel>();
         HashSet<string> visited = new HashSet<string>(); //Using a string hashset to make sure that no place will be visited twice - this helps to avoid loops
 
         FindRoutesDFS(pricelist, from, to, allRoutes, currentRoute, visited);
-
+        
+        
         return allRoutes;
     }
 

@@ -9,14 +9,14 @@ namespace CosmosOdyssey.Pages
 {
     public class IndexModel : PageModel
     {
-        public TravelRouteModel? chosenRoute = null;
-        public List<List<TravelRouteModel>>? longRouteOptions = null;
+        public List<List<TravelRouteModel>>? RouteOptions = null;
         
         [BindProperty(SupportsGet = true)]
         public string fromSelection { get; set; }
         [BindProperty(SupportsGet = true)]
         public string toSelection { get; set; }
 
+        public string visibleTable;
         private bool requestMade;
 
         private TravelRouteDataService travelRouteDataService;
@@ -29,8 +29,7 @@ namespace CosmosOdyssey.Pages
         public IActionResult OnGet() { //OnGet load; initiated every time the page is loaded
             //Get data if the request has already been made
             if (requestMade == true) {
-                chosenRoute = travelRouteDataService.chosenRoute;
-                longRouteOptions = travelRouteDataService.longRouteOptions;
+                RouteOptions = travelRouteDataService.routeOptions;
             }
             return Page();
         }
@@ -40,14 +39,29 @@ namespace CosmosOdyssey.Pages
             if (fromSelection != "" && toSelection != "") {
                 await APIrequest.MakeRequest(fromSelection, toSelection);
                 requestMade = true;
-                chosenRoute = travelRouteDataService.chosenRoute;
-                longRouteOptions = travelRouteDataService.longRouteOptions;
+                RouteOptions = travelRouteDataService.routeOptions;
+                foreach (var option in RouteOptions) {
+                    FullRouteToText(option);
+                }
             }
             return Page();
         }
 
         public IActionResult RedirectToIndex() {
             return RedirectToPage("/index");
+        }
+
+        public void SetTableVisibility(string TableID) {
+            visibleTable = TableID;
+        }
+
+        public string FullRouteToText(List<TravelRouteModel> fullRoute) {
+            string FullRouteText = "";
+            foreach (var route in fullRoute) {
+                FullRouteText += route.From + " - ";
+            }
+            FullRouteText += fullRoute[^1].To;
+            return FullRouteText;
         }
     }
 }
