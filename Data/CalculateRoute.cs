@@ -4,13 +4,15 @@ namespace CosmosOdyssey.Data;
 
 public class CalculateRoute {
     public static List<List<TravelRouteModel>> AllPossibleRoutes;
-    public static List<List<TravelRouteModel>> AllPossibleRoutesHold;
+    public static string firstFrom;
+    public static string firstTo;
     
     public static List<List<TravelRouteModel>> FindAvalaibleRoute(Pricelist pricelist, string from, string to, List<List<TravelRouteModel>> outputList)
     {
+        firstFrom = from;
+        firstTo = to;
         List<List<TravelRouteModel>> AllGoodRoutes = new List<List<TravelRouteModel>>();
         AllPossibleRoutes = new List<List<TravelRouteModel>>();
-        AllPossibleRoutesHold = new List<List<TravelRouteModel>>();
 
         outputList = FindAvailableRoutes2(pricelist, from, to, AllGoodRoutes, null);
         
@@ -43,73 +45,80 @@ public class CalculateRoute {
     //How?
     //Store every route as a list of routes. With every additional search, just add to the existing routes. Then
     //once you find the right one, you can store it
-    
-    //List for storing all possible routes
-    public static List<List<TravelRouteModel>> AllFoundRoutes;
-    public static void FindAvalaibleRoutes(Pricelist pricelist, string from, string to) {
-        //Go through each possible route to find the ones departing from chosen location
-        foreach (Leg candidate in pricelist.legs) {
-            if (candidate.routeInfo.from.name == from) {
-                TravelRouteModel candidateModel = new TravelRouteModel {From = from, To = candidate.routeInfo.to.name, Distance = candidate.routeInfo.distance, Providers = candidate.providers};
-                List<TravelRouteModel> possibleRoute = new List<TravelRouteModel> { candidateModel };
-                AllPossibleRoutes.Add(possibleRoute);
-            }
-        }
-        //Go through all possible routes to see if any of them have fitting destination
-        foreach (var TravelRoute in AllPossibleRoutes) {
-            if (TravelRoute[^1].To == to) { //if TravelRoute[TravelRoute.count - 1].To == to
-                AllFoundRoutes.Add(TravelRoute);
-            }
-        }
-        //If there are no suitable candidates, do the first check again, but now with items in the list. Add new list for every route, do not append.
-        if (AllFoundRoutes.Count == 0) {
-            foreach (var TravelRoute in AllPossibleRoutes) { //For every possible route in allpossibleroutes list
-                foreach (Leg candidate in pricelist.legs) { //Go through all possible legs
-                    if (candidate.routeInfo.from.name == TravelRoute[TravelRoute.Count - 1].To) { //If there are any routes that start from the destination of an already stored route
-                        TravelRouteModel candidateModel = new TravelRouteModel {From = TravelRoute[TravelRoute.Count - 1].To, To = candidate.routeInfo.to.name, Distance = candidate.routeInfo.distance, Providers = candidate.providers};
-                        //Make a copy of the TravelRoute list that is being looked at right now, add new element to the end of it
-                        List<TravelRouteModel> possibleRoute = new List<TravelRouteModel>(TravelRoute);
-                        possibleRoute.Add(candidateModel);
-                        AllPossibleRoutes.Add(possibleRoute);
-                    }
-                }
-            }
-            foreach (var TravelRoute in AllPossibleRoutes) {
-                if (TravelRoute[TravelRoute.Count - 1].To == to) {
-                    AllFoundRoutes.Add(TravelRoute);
-                }
-            }
-        }
-    }
-
+public static int Protector = 0;
     public static List<List<TravelRouteModel>> FindAvailableRoutes2(Pricelist pricelist, string from, string to, List<List<TravelRouteModel>> AllGoodRoutes, List<TravelRouteModel>? possibleRoute) {
-        foreach (Leg candidate in pricelist.legs) {
-            if (candidate.routeInfo.from.name == from) {
+        Protector = Protector + 1;
+        bool possibleRouteCreated = false;
+        foreach (Leg candidate in pricelist.legs) { //At the very start assume that the route does not have possibleRoute created that contains it
+            possibleRouteCreated = false;
+            if (candidate.routeInfo.from.name == from && candidate.routeInfo.to.name != firstFrom && candidate.routeInfo.from.name != firstTo) { //Check that the route does not take to the original departure point
+                Console.WriteLine("Searching for all routes from " + from);
                 TravelRouteModel candidateModel = new TravelRouteModel {
                     From = from, To = candidate.routeInfo.to.name, Distance = candidate.routeInfo.distance,
                     Providers = candidate.providers };
                 if (possibleRoute == null) {
                     possibleRoute = new List<TravelRouteModel> { candidateModel };
+                    possibleRouteCreated = true;
                 }
                 else {
-                    possibleRoute = new List<TravelRouteModel>(possibleRoute);
-                    possibleRoute.Add(candidateModel);
+                    //Among the already found possible routes, are there any with the final "To" field matching candidateModel's "From" field? If yes, add it to the list
+                    foreach (var route in AllPossibleRoutes) {
+                        if ((route[^1].To) == candidateModel.From) { 
+                            possibleRoute = new List<TravelRouteModel>(possibleRoute);
+                            possibleRoute.Add(candidateModel);
+                            possibleRouteCreated = true;
+                        }
+                    }
+                    //If by now no possibleRoute exists for the current route model, create it now
+                    if (possibleRouteCreated == false) {
+                        possibleRoute = new List<TravelRouteModel> { candidateModel };
+                    }
                 }
                 AllPossibleRoutes.Add(possibleRoute);
             }
         }
+        Console.WriteLine("Possible routes:");
+        foreach (var VARIABLE in AllPossibleRoutes) {
+            Console.WriteLine("____________________________________");
+            foreach (var var in VARIABLE) {
+                Console.WriteLine("From " + var.From + " To " + var.To);
+            }
+        }
+        Console.WriteLine("____________________________________");
+
         //Look through all possible routes and see if any of them match the chosen destination
         foreach (var TravelRoute in AllPossibleRoutes) {
             if (TravelRoute[TravelRoute.Count - 1].To == to) {
-                AllGoodRoutes.Add(TravelRoute);
+                if (!AllGoodRoutes.Contains(TravelRoute)) {
+                    Console.WriteLine("Adding valid route. Target destination: " + to);
+                    foreach (var var in TravelRoute) {
+                        Console.WriteLine("From " + var.From); Console.WriteLine("To " + var.To);
+                    }
+                    Console.WriteLine("-----------------------------------");
+                    AllGoodRoutes.Add(TravelRoute);
+                }
             }
         }
         //If there are no suitable candidates, call the function again, but now with the items in the list.
-        if (AllGoodRoutes.Count == 0) {
+        if (AllGoodRoutes.Count < 2) {
             List<List<TravelRouteModel>> AllPossibleRoutesCopy = new List<List<TravelRouteModel>>(AllPossibleRoutes);
-            foreach (List<TravelRouteModel> TravelRoute in AllPossibleRoutesCopy) {
+            for (int i = AllPossibleRoutesCopy.Count - 1; i >= 0; i--) {
+                List<TravelRouteModel> TravelRoute = AllPossibleRoutesCopy[i];
+                Console.WriteLine("Inside recursive call. From " + TravelRoute[^1].From + " To " + to);
+                if (Protector > 50) {
+                    Console.WriteLine("50 times called. Stopping.");
+                    break;
+                }
                 FindAvailableRoutes2(pricelist, TravelRoute[^1].To, to, AllGoodRoutes, possibleRoute);
             }
+            /*foreach (List<TravelRouteModel> TravelRoute in AllPossibleRoutesCopy) {
+                Console.WriteLine("Inside recursive call. From " + TravelRoute[^1].To + " To " + to);
+                if (Protector > 10) {
+                    Console.WriteLine("10 times called. Stopping.");
+                    break;
+                }
+                FindAvailableRoutes2(pricelist, TravelRoute[^1].To, to, AllGoodRoutes, possibleRoute);
+            }*/
         }
         return AllGoodRoutes;
     }
