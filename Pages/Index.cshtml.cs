@@ -37,7 +37,7 @@ namespace CosmosOdyssey.Pages
         public async Task<IActionResult> OnPost() {
             RoutesAPIrequest APIrequest = new RoutesAPIrequest(travelRouteDataService, this);
             if (fromSelection != "" && toSelection != "") {
-                await APIrequest.MakeRequest(fromSelection, toSelection);
+                await APIrequest.GetPriceList(fromSelection, toSelection);
                 requestMade = true;
                 RouteOptions = travelRouteDataService.routeOptions;
                 foreach (var option in RouteOptions) {
