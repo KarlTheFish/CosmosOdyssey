@@ -17,6 +17,8 @@ namespace CosmosOdyssey.Pages
         public string toSelection { get; set; }
         [BindProperty(SupportsGet = true)]
         public string companyFilter { get; set; }
+        [BindProperty]
+        public List<string> SelectedProviders { get; set; }
         private bool requestMade;
         public HashSet<String> availableCompanies;
 
@@ -28,6 +30,7 @@ namespace CosmosOdyssey.Pages
         }
         
         public IActionResult OnGet() { //OnGet load; loads first time the page is loaded
+            SelectedProviders = new List<string>();
             if (requestMade == true) {
                 RouteOptions = travelRouteDataService.routeOptions;
             }
@@ -50,6 +53,11 @@ namespace CosmosOdyssey.Pages
                     }
                 }
             return Page();
+        }
+
+        public IActionResult OnPostBookFlight() {
+            Console.WriteLine("OnPostBookFlight from index called");
+            return RedirectToPage("/BookFlight");
         }
 
         public IActionResult RedirectToIndex() {

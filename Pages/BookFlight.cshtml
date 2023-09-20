@@ -1,0 +1,22 @@
+@page
+@model CosmosOdyssey.Pages.BookFlightModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Book a flight</title>
+</head>
+<body>
+<ul>
+    @foreach (var provider in Model.SelectedProviders)
+    {
+        <li>@provider</li>
+    }
+</ul>
+</body>
+</html>

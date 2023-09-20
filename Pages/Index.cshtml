@@ -32,7 +32,7 @@
                 }
             </select>
             <button type="submit">Go!</button>
-            @if (Model.RouteOptions != null){
+             @*@if (Model.RouteOptions != null){
                 <label>Filter by company:</label>
                 <select id="companyFilter" name="companyFilter" asp-for="companyFilter">
                     <option value="" hidden>Show all companies</option>
@@ -40,7 +40,7 @@
                         <option value="@company">@company</option>
                     }
                 </select>
-            }
+            }*@
         </form>
     </div>   
     <div>
@@ -52,7 +52,8 @@
             }
             foreach (var FullRoute in Model.RouteOptions){//Goes through all the route options
                 <table id="@Model.FullRouteToText(FullRoute)" style="display: none; margin-left: auto; margin-right: auto">
-                        @foreach (var Route in FullRoute){
+                    <form method="post" asp-page="BookFlight"> <!-- Allows customer to choose provider for the route -->
+                    @foreach (var Route in FullRoute){
                                 //Goes through every leg in a full route
                                 <tr>
                                     <td>From @Route.From</td>
@@ -60,18 +61,19 @@
                                     <td>Distance @Route.Distance</td>
                                 </tr>
                             <tr><td>Providers:</td></tr>
-                            <form> <!-- Allows customer to choose provider for the route -->
                                 @foreach (var provider in Route.Providers){ 
                                             <tr>
                                                 <td>@provider.company.name</td>
                                                 <td>@provider.price</td>
                                                 <td>@provider.flightStart</td>
                                                 <td>@provider.flightEnd</td>
-                                                <td><input type="radio" name="provider + @Route.From + @Route.To"/></td>
+                                                <td><input type="radio" name="SelectedProviders[@Route.From + @Route.To]" value="@provider.company.name" /></td>
                                             </tr>
                                     }
-                            </form>
-                            }
+                        }
+                    
+                    <!-- <button type="submit">Book a flight with selected providers</button> -->
+                        </form>
                 </table>
             }
         }
@@ -94,6 +96,12 @@ $(document).ready(function () {
             }
         });
     }
+
+    // Add click event handler for the route buttons
+    $('.route-button').click(function () {
+        var tableId = $(this).data('table-id');
+        ShowTable(tableId);
+    });
 
     // ... (other JavaScript functions and logic if needed)
 });
