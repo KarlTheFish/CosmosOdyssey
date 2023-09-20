@@ -60,15 +60,17 @@
                                     <td>Distance @Route.Distance</td>
                                 </tr>
                             <tr><td>Providers:</td></tr>
-                                @foreach (var provider in Route.Providers){
+                            <form> <!-- Allows customer to choose provider for the route -->
+                                @foreach (var provider in Route.Providers){ 
                                             <tr>
                                                 <td>@provider.company.name</td>
                                                 <td>@provider.price</td>
                                                 <td>@provider.flightStart</td>
                                                 <td>@provider.flightEnd</td>
-                                                <td> <button class="provider-button" data-route="@FullRoute" data-provider-id="@provider.company.name">Select</button></td>
+                                                <td><input type="radio" name="provider + @Route.From + @Route.To"/></td>
                                             </tr>
                                     }
+                            </form>
                             }
                 </table>
             }
@@ -77,50 +79,25 @@
 </div>
 </body>
 <script>
-    $(document).ready(function () {
-        // Use an object to store selected providers for each table
-        var selectedProviders = {};
+$(document).ready(function () {
+    // Use an object to store selected providers for each route
+    var selectedProviders = {};
 
-        // Function to show/hide tables based on user interaction
-        function ShowTable(tableId) {
-            var tables = document.querySelectorAll('table');
-            tables.forEach(function (table) {
-                if (table.id === tableId) {
-                    table.style.display = 'table';
-                } else {
-                    table.style.display = 'none';
-                }
-            });
-        }
-
-        // Add click event handler for the route buttons
-        $('.route-button').click(function () {
-            var tableId = $(this).data('table-id');
-            ShowTable(tableId);
-        });
-
-        // Add click event handler for the provider buttons
-        $('.provider-button').click(function () {
-            var route = $(this).data('route');
-            var tableId = $(this).data('table-id');
-            var providerId = $(this).data('provider-id');
-
-            // Check if a provider is already selected for this table
-            if (selectedProviders[tableId]) {
-                // If a provider is already selected, deselect it
-                $(`button.provider-button[data-table-id="${tableId}"].selected-provider-button`).removeClass('btn-provider-selected');
-                delete selectedProviders[tableId];
+    // Function to show/hide tables based on user interaction
+    function ShowTable(tableId) {
+        var tables = document.querySelectorAll('table');
+        tables.forEach(function (table) {
+            if (table.id === tableId) {
+                table.style.display = 'table';
+            } else {
+                table.style.display = 'none';
             }
-
-            // Select the clicked provider for the table
-            selectedProviders[tableId] = providerId;
-            $(this).addClass('btn-provider-selected');
-
-            // ... (other logic if needed)
         });
+    }
 
-        // ... (other JavaScript functions and logic if needed)
-    });
+    // ... (other JavaScript functions and logic if needed)
+});
+
 </script>
 
 
