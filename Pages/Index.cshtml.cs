@@ -38,7 +38,8 @@ namespace CosmosOdyssey.Pages
         }
 
         public async Task<IActionResult> OnPost() {
-                RoutesAPIrequest APIrequest = new RoutesAPIrequest(travelRouteDataService, this); //Filtering still doesn't work
+            if (fromSelection != toSelection) {
+               RoutesAPIrequest APIrequest = new RoutesAPIrequest(travelRouteDataService, this); //Filtering still doesn't work
                 Console.WriteLine("From " + fromSelection + " to " + toSelection);
                 await APIrequest.GetPriceList(fromSelection, toSelection, companyFilter);
                 requestMade = true;
@@ -52,11 +53,11 @@ namespace CosmosOdyssey.Pages
                         }
                     }
                 }
+            }
             return Page();
         }
 
         public IActionResult OnPostBookFlight() {
-            Console.WriteLine("OnPostBookFlight from index called");
             return RedirectToPage("/BookFlight");
         }
 

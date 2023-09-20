@@ -44,44 +44,56 @@
         </form>
     </div>   
     <div>
-        @if (Model.RouteOptions != null){ //TODO: Make the tables actually look nice
+        @if (Model.sameSelect == true){
+            
+        }
+        @if (Model.RouteOptions != null)
+        {
+            //TODO: Make the tables actually look nice
             <h3>Found @Model.RouteOptions.Count available route(s) from @Model.RouteOptions[0][0].From to @Model.RouteOptions[^1][^1].To</h3>
             <p>Click on the routes to see more information</p>
-            foreach (var FullRoute in Model.RouteOptions){ //For creating the buttons. In separate foreach for better user experience
+            foreach (var FullRoute in Model.RouteOptions)
+            {
+                //For creating the buttons. In separate foreach for better user experience
                 <button class="route-button" data-table-id="@Model.FullRouteToText(FullRoute)">@Model.FullRouteToText(FullRoute)</button>
             }
-            foreach (var FullRoute in Model.RouteOptions){//Goes through all the route options
+            foreach (var FullRoute in Model.RouteOptions)
+            {
+//Goes through all the route options
                 <table id="@Model.FullRouteToText(FullRoute)" style="display: none; margin-left: auto; margin-right: auto">
                     <form method="post" asp-page="BookFlight"> <!-- Allows customer to choose provider for the route -->
-                    @foreach (var Route in FullRoute){
-                        <tr><td class="emptyRow"></td></tr> <!-- Empty row for visual purposes -->
-                                //Goes through every leg in a full route
+                        @foreach (var Route in FullRoute)
+                        {
+                            <tr><td class="emptyRow"></td></tr>
+                            <!-- Empty row for visual purposes -->
+                            //Goes through every leg in a full route
+                            <tr>
+                                <td>From @Route.From</td>
+                                <td>to @Route.To</td>
+                                <td>Distance @Route.Distance</td>
+                            </tr>
+                            <tr><td>Providers:</td></tr>
+                            <tr>
+                                <td>Provider name</td>
+                                <td>Price</td>
+                                <td>Departure</td>
+                                <td>Arrival</td>
+                            </tr>
+                            @foreach (var provider in Route.Providers)
+                            {
                                 <tr>
-                                    <td>From @Route.From</td>
-                                    <td>to @Route.To</td>
-                                    <td>Distance @Route.Distance</td>
+                                    <td>@provider.company.name</td>
+                                    <td>@provider.price</td>
+                                    <td>@provider.flightStart</td>
+                                    <td>@provider.flightEnd</td>
+                                    <td><input type="radio" name="SelectedProviders[@Route.From + @Route.To]" value="@provider.company.name"/></td>
                                 </tr>
-                        <tr><td>Providers:</td></tr>
-                        <tr>
-                            <td>Provider name</td>
-                            <td>Price</td>
-                            <td>Departure</td>
-                            <td>Arrival</td>
-                        </tr>
-                                @foreach (var provider in Route.Providers){ 
-                                            <tr>
-                                                <td>@provider.company.name</td>
-                                                <td>@provider.price</td>
-                                                <td>@provider.flightStart</td>
-                                                <td>@provider.flightEnd</td>
-                                                <td><input type="radio" name="SelectedProviders[@Route.From + @Route.To]" value="@provider.company.name" /></td>
-                                            </tr>
-                                    }
-                        
+                            }
+
                         }
-                    
-                    <!-- <button type="submit">Book a flight with selected providers</button> -->
-                        </form>
+
+                        <!-- <button type="submit">Book a flight with selected providers</button> -->
+                    </form>
                 </table>
             }
         }
