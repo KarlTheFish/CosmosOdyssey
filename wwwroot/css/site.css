@@ -29,15 +29,9 @@ table {
   color: #000000;
   & tr:nth-child(even) {
     background-color: #e7e7e7;
-    & button {
-      background-color: #e7e7e7;
-    }
   }
   & tr:nth-child(odd) {
     background-color: #f4f4f4;
-    & button {
-      background-color: #f4f4f4;
-    }
   }
   & td {
     border: 1px solid black;
@@ -47,4 +41,14 @@ table {
   & firstColumn {
     text-align: left;
   }
+}
+
+button {
+  background-color: #ffffff;
+  color: #000000;
+}  
+
+.btn-provider-selected {
+  background-color: #7b7b7b;
+  color: #000000;
 }

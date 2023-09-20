@@ -22,17 +22,16 @@ public class RoutesAPIrequest {
         this.indexModel = indexModel;
     }
 
-    public async Task<IActionResult> GetPriceList(string from, string to) {
+    public async Task<IActionResult> GetPriceList(string from, string to, string? companyName) {
         if (travelRouteDataService.Last15Pricelists.Count == 0) { //If the count of current pricelists is 0, get a new one
             await MakeAPIrequest();
         }
         currentPricelist = travelRouteDataService.Last15Pricelists[0];
         if (currentPricelist.validUntil < DateTime.Now) { //If the current time is newer than validUntil datetime
-            Console.WriteLine("Time to change lol");
             await MakeAPIrequest();
         }
 
-        travelRouteDataService.routeOptions = CalculateRoute.FindAvailableRoute(currentPricelist, from, to);
+        travelRouteDataService.routeOptions = CalculateRoute.FindAvailableRoute(currentPricelist, from, to, companyName);
         
         return indexModel.RedirectToIndex();
     }

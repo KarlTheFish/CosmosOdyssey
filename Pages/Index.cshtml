@@ -6,13 +6,14 @@
 <html lang="en">
 <head>
     <title>@ViewData["Title"]</title>
-    <!-- Add your CSS and scripts here -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 <body>
 <div class="text-center">
     <h1 class="display-4">Welcome to CosmosOdyssey!</h1>
     
-    <h2 size="14px">Most trusted space flight booking site since 2023!</h2>
+    <h2 size="14px">The most trusted space flight booking site since 2023!</h2>
     
     <div>
         <form method="post">
@@ -31,17 +32,26 @@
                 }
             </select>
             <button type="submit">Go!</button>
+            @if (Model.RouteOptions != null){
+                <label>Filter by company:</label>
+                <select id="companyFilter" name="companyFilter" asp-for="companyFilter">
+                    <option value="" hidden>Show all companies</option>
+                    @foreach(var company in @Model.availableCompanies){
+                        <option value="@company">@company</option>
+                    }
+                </select>
+            }
         </form>
-    </div>
+    </div>   
     <div>
         @if (Model.RouteOptions != null){ //TODO: Make the tables actually look nice
             <h3>Found @Model.RouteOptions.Count available route(s) from @Model.RouteOptions[0][0].From to @Model.RouteOptions[^1][^1].To</h3>
             <p>Click on the routes to see more information</p>
             foreach (var FullRoute in Model.RouteOptions){ //For creating the buttons. In separate foreach for better user experience
-                <button onclick="ShowTable('@Model.FullRouteToText(FullRoute)')">@Model.FullRouteToText(FullRoute)</button>
+                <button class="route-button" data-table-id="@Model.FullRouteToText(FullRoute)">@Model.FullRouteToText(FullRoute)</button>
             }
             foreach (var FullRoute in Model.RouteOptions){//Goes through all the route options
-                <Table id="@Model.FullRouteToText(FullRoute)" style="display: none;">
+                <table id="@Model.FullRouteToText(FullRoute)" style="display: none; margin-left: auto; margin-right: auto">
                         @foreach (var Route in FullRoute){
                                 //Goes through every leg in a full route
                                 <tr>
@@ -49,32 +59,71 @@
                                     <td>to @Route.To</td>
                                     <td>Distance @Route.Distance</td>
                                 </tr>
-                                <tr><td>Providers:</td></tr>
+                            <tr><td>Providers:</td></tr>
                                 @foreach (var provider in Route.Providers){
-                                    <tr>
-                                        <td>@provider.company.name</td>
-                                        <td>@provider.price</td>
-                                        <td>@provider.flightStart</td>
-                                        <td>@provider.flightEnd</td>
-                                    </tr>
-                                }
+                                            <tr>
+                                                <td>@provider.company.name</td>
+                                                <td>@provider.price</td>
+                                                <td>@provider.flightStart</td>
+                                                <td>@provider.flightEnd</td>
+                                                <td> <button class="provider-button" data-route="@FullRoute" data-provider-id="@provider.company.name">Select</button></td>
+                                            </tr>
+                                    }
                             }
-                </Table>
+                </table>
             }
         }
     </div>
 </div>
 </body>
 <script>
-    function ShowTable(tableId) {
-        var tables = document.querySelectorAll('table');
-        tables.forEach(function (table) {
-            if (table.id === tableId) {
-                table.style.display = 'table';
-            } else {
-                table.style.display = 'none';
-            }
+    $(document).ready(function () {
+        // Use an object to store selected providers for each table
+        var selectedProviders = {};
+
+        // Function to show/hide tables based on user interaction
+        function ShowTable(tableId) {
+            var tables = document.querySelectorAll('table');
+            tables.forEach(function (table) {
+                if (table.id === tableId) {
+                    table.style.display = 'table';
+                } else {
+                    table.style.display = 'none';
+                }
+            });
+        }
+
+        // Add click event handler for the route buttons
+        $('.route-button').click(function () {
+            var tableId = $(this).data('table-id');
+            ShowTable(tableId);
         });
-    }
+
+        // Add click event handler for the provider buttons
+        $('.provider-button').click(function () {
+            var route = $(this).data('route');
+            var tableId = $(this).data('table-id');
+            var providerId = $(this).data('provider-id');
+
+            // Check if a provider is already selected for this table
+            if (selectedProviders[tableId]) {
+                // If a provider is already selected, deselect it
+                $(`button.provider-button[data-table-id="${tableId}"].selected-provider-button`).removeClass('btn-provider-selected');
+                delete selectedProviders[tableId];
+            }
+
+            // Select the clicked provider for the table
+            selectedProviders[tableId] = providerId;
+            $(this).addClass('btn-provider-selected');
+
+            // ... (other logic if needed)
+        });
+
+        // ... (other JavaScript functions and logic if needed)
+    });
 </script>
+
+
+
+
 </html>
